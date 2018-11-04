@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>IBM问答系统</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.confirm.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.nicescroll.min.js}"></script>
+    <script th:src="@{/js/jquery-scrolltofixed.js}"></script>
+    <link href="css/reset.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="css/subpage.css" rel="stylesheet" type="text/css">
+    <script>
+        $(document).ready(
+          function () {
+              $("#col-r").niceScroll({
+                  cursorwidth: "10px",
+                  horizrailenabled: false
+              });
+          }
+      );
+    </script>
+    
+    
+    
+    
+    
+</head>
+
+
+
+
+
+
+<body>
+    <form method="post" action="ReplyList.aspx?Type=0001" id="form1">
+        <div id="header">
+            
+
+            <!--<div class="logo"></div>-->
+
+            <div class="main-nav">
+                <ul>
+                    <li class="current"><a href="index">QA System</a></li>
+                    <li class="nav-qa"><a href="Qalist">Common Question</a></li>
+                	<li class="nav-reply"><a href="about">About</a></li>
+                </ul>
+            </div>
+
+
+
+        </div>
+
+        <div>
+            
+
+        <div class="header-banner-top header-banner-list">
+            <div class="nav-main-page">
+                <div class="wrapper" style="text-align: center;">
+                  <h3>Common QA</h3>
+                </div>
+            </div>
+        </div>
+        
+        <div class="wrapper">
+    
+      
+
+
+        <div class="qa-list-l" style="z-index: auto; position: static; top: auto;">
+        </div><div style="display: none; width: 250px; height: 371px; float: left;"></div>
+
+
+
+
+          <div class="qa-list-r">
+            <div class="wrapper">
+              <div class="qa-list-title">IBM Common QA</div>
+              <ul class="qa-text-list">
+                  <li><a class="slider" href="QaDetail1">What is WAS? </a></li>
+            
+                  <li><a class="slider" href="QaDetail">What can I do with Web Portal? </a></li>
+                  
+
+   
+                  <li><a class="slider" href="QaDetail2">What is the difference in functionality between Server, Enable, Extend, and Express in Portal products?</a></li>
+                  
+                  <li><a class="slider" href="QaDetail3">What are the steps for installing IBM Portal 9.0 and what server resources are needed?</a></li>
+                  
+                  <li><a class="slider" href="QaDetail4">How is portal and enterprise internal system integration, data docking implementation and convenience?</a></li>
+                  
+                  
+              </ul>
+
+              <div class="pages">    
+                    <!-- AspNetPager V7.0.2 for VS2005 & VS2008  Copyright:2003-2007 Webdiyer (www.webdiyer.com) -->
+                    <div id="ContentPlaceHolder1_AspNetPager1">
+                        
+	                    <!-- AspNetPager V7.0.2 for VS2005 & VS2008  Copyright:2003-2007 Webdiyer (www.webdiyer.com) -->
+                    <!-- AspNetPager V7.0.2 for VS2005 & VS2008 End -->
+
+
+
+                    </div>
+                    <!-- AspNetPager V7.0.2 for VS2005 & VS2008 End --> 
+            
+                  </div>
+             </div>
+          </div>
+
+</div>
+
+        </div>
+
+        <div>
+
+            <div id="footer" >
+              <div class="wrapper">
+                <ul class="footer-ul">
+                  <li>
+                    <h2>Related Links</h2>
+                    <ul class="subnav-link">
+                      <li><a href="https://www.swjtu.edu.cn" target="_blank">Southwest Jiaotong University</a> </li>
+                      <li><a href="https://www.ibm.com/cn-zh/?ar=1" target="_blank">IBM</a> </li>
+                    </ul>
+                  </li>
+                </ul>
+                <div class="copyright">
+                  <ul>
+                    <li>Made By : Southwest Jiaotong University</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+        </div>
+    </form>
+
+ <script th:src="@{/js/purl.js}"></script>
+    <script>
+        $(document).ready(function() {
+            var type = $.url().param('Type');
+            //if (type == null) {
+            //    type = 'A';
+            //}
+            type = '#Type' + type;
+            $(type).addClass("current");
+        });
+    </script>
+
+
+<script th:src="@{/js/jquery.pageslide.js}"></script>
+<script>
+    $(".slider").pageslide({ direction: "left", modal: "true" });
+</script>
+<script type="text/javascript" th:src="@{/js/jquery.number.js}"></script>
+
+</body>
+
+</html>

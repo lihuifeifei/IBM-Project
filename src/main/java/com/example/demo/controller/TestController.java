@@ -1,9 +1,8 @@
 package com.example.demo.controller;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +14,17 @@ import com.example.demo.common.Info;
 import com.example.demo.dao.QAcommonmapper;
 import com.example.demo.dao.QAlogmapper;
 import com.example.demo.po.QAcommonEntity;
+import com.example.demo.po.Status;
 import com.ibm.watson.developer_cloud.assistant.v1.Assistant;
+import com.ibm.watson.developer_cloud.assistant.v1.model.Context;
+import com.ibm.watson.developer_cloud.assistant.v1.model.DialogNode;
 import com.ibm.watson.developer_cloud.assistant.v1.model.ExampleCollection;
+import com.ibm.watson.developer_cloud.assistant.v1.model.GetDialogNodeOptions;
 import com.ibm.watson.developer_cloud.assistant.v1.model.InputData;
 import com.ibm.watson.developer_cloud.assistant.v1.model.ListExamplesOptions;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageOptions;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageResponse;
+import com.ibm.watson.developer_cloud.service.security.IamOptions;
 
 @Controller
 public class TestController {
@@ -31,18 +35,15 @@ public class TestController {
 	@Autowired
 	private QAlogmapper qalogmapper;
 	
+	private Assistant service= null;
+	private String workspaceId = Info.workspaceId;
+	private IamOptions iamOptions = null;
 	
-	//跳转到主界面
-	@RequestMapping("/hello")
-	public String testString(Model model) {
-		return "test";
-	}
+	private Context context = null;
 	
-	//测试界面
-	@RequestMapping("/totalk")
-	public String totalk() {
-		return "talk";
-	}
+	
+
+	
 	
 	
 	//获取intent的例子
@@ -125,23 +126,61 @@ public class TestController {
 		return list;
 	}
 	
+	//clear
+	@RequestMapping("/clearDialog")
+	@ResponseBody
+	public Status clearDialog() {
+		Status status = new Status();
+		System.out.println("this is clear");
+		
+		context=null;
+		status.setIsSucces("success");
+		return status;
+	}
+	
 	//对提问进行回答，并记录到数据库
 	@RequestMapping("/ansandlog")
 	@ResponseBody
 	public MessageResponse ansAndLog(@RequestParam("dialogNode")String dialogNode) {
-		Assistant service = new Assistant("2018-08-30");
-		service.setUsernameAndPassword(Info.username, Info.password);
-		String workspaceId = Info.workspaceId;
+		if(service==null) {
+//			service = new Assistant("2018-08-30");
+//			service.setUsernameAndPassword(Info.username, Info.password);
+			iamOptions = new IamOptions.Builder()
+				    .apiKey(Info.apikey)
+				    .build();
+			service = new Assistant("2018-08-30", iamOptions);
+			service.setEndPoint(Info.Url);
+		}
+		System.out.println("数据");
+		System.out.println(dialogNode);
+
 		InputData input = new InputData.Builder(dialogNode).build();
 		MessageOptions options = new MessageOptions.Builder(workspaceId)
-		  .input(input)
+		  .input(input).context(context)
 		  .build();
 		MessageResponse response = service.message(options).execute();
-		String ans = response.getOutput().getText().get(0);
-		if(ans != null) {
-			qalogmapper.insertItem(dialogNode, ans);
-		}
+		context = response.getContext();
+	//	String ans = response.getOutput().getText().get(0);
+//		if(ans != null) {
+//			qalogmapper.insertItem(dialogNode, ans);
+//		}
 		return response;
+	}
+	
+	@RequestMapping("/getDialogNode")
+	@ResponseBody
+	public void getDialogNode(@Param("dialogNode")String dialogNode) {
+	
+		IamOptions iamOptions = new IamOptions.Builder().apiKey("{apiKey}").build();
+		Assistant service = new Assistant("2018-09-20", iamOptions);
+
+		String workspaceId = Info.workspaceId;
+
+		GetDialogNodeOptions options = new GetDialogNodeOptions.Builder(workspaceId, dialogNode).build();
+
+		DialogNode response = service.getDialogNode(options).execute();
+
+		System.out.println(response);
 	}
 
 }

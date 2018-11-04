@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>IBM问答系统</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/myjs.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.nicescroll.min.js}"></script>
+    <link href="css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="css/qa-detail.css" rel="stylesheet" type="text/css" />
+    <script>
+        $(document).ready(
+          function() {
+              $("body").niceScroll({
+                  cursorwidth: "10px",
+                  horizrailenabled: false
+              });
+          }
+      );
+    </script>
+    
+    
+</head>
+
+
+<body style="margin-left: 0px;">
+<form id="form2" runat="server">
+    <!--<form method="post" action="QaDetail.aspx?ID=322" id="form1">-->
+
+        <div id="main">
+          <h1>What is WAS?</h1>
+        <ul class="sub-title">
+
+
+        <li>Release time：2018-11-03</li>
+         </ul>
+          <div class="title-answer"></div>
+          <div class="contain-reply">
+          WAS is short for WebSphere Application Server. WebSphere is IBM's software platform.It includes the entire middleware infrastructure, such as servers, services, and tools needed to write, run, and monitor 24x7 industrial-strength on demand Web applications and cross-platform, cross-product solutions.WebSphere provides reliable, flexible, and robust software.
+          </div>
+
+      <div id="divCount">
+        <div class="title">Please rate our services</div>
+        <a class="emo-enjoy" onclick="myfun()" title="非常满意"><i></i><h2>3</h2></a>
+        <a class="emo-happy" onclick="myfun()" title="满意"><i></i><h2>2</h2></a>
+        <a class="emo-nature" onclick="myfun()" title="一般"><i></i><h2>1</h2></a></div>
+    </div>
+        <div style="display:none">
+            <input type="submit" name="Button1" value="Button" id="Button1" />
+            <input type="submit" name="Button2" value="Button" id="Button2" />
+            <input type="submit" name="Button3" value="Button" id="Button3" /> 
+       </div>
+    </form>
+
+
+</body>
+
+
+</html>

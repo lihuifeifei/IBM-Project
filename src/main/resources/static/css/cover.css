@@ -1,0 +1,56 @@
+body{
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #515a6e;
+    background-color: #fff;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+}
+.bg {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    background-image: url(../images/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    overflow: hidden;
+}
+
+.index-main {
+    position: absolute;
+    padding: 10% 0 0 70px;
+}
+
+.index-content {
+    font-size: 24px;
+    margin-top: 10px;
+    padding-left: 16px;
+}
+
+.index-actions {
+    margin-top: 80px;
+    margin-bottom: 150px;
+    margin-left: 16px;
+}
+
+.index-btn {
+    min-width: 120px;
+    margin-right: 16px;
+}
+
+.index-bg-footer {
+    width: 260px;
+    height: 90px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.index-bg-footer img {
+    width: 100%;
+}

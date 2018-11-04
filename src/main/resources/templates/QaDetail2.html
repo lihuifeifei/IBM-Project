@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>IBM问答系统</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.nicescroll.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/myjs.js}"></script>
+    <link href="css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="css/qa-detail.css" rel="stylesheet" type="text/css" />
+    <script>
+        $(document).ready(
+          function() {
+              $("body").niceScroll({
+                  cursorwidth: "10px",
+                  horizrailenabled: false
+              });
+          }
+      );
+    </script>
+    
+    
+</head>
+
+
+<body style="margin-left: 0px;">
+<form id="form2" runat="server">
+    <!--<form method="post" action="QaDetail.aspx?ID=322" id="form1">-->
+
+        <div id="main">
+          <h1>What is the difference in functionality between Server, Enable, Extend, and Express in Portal products?</h1>
+        <ul class="sub-title">
+
+
+        <li>Release time：2018-11-03</li>
+         </ul>
+          <div class="title-answer"></div>
+          <div class="contain-reply">
+         Server is the foundation product of the Portal family. It meets the needs of users to complete business needs with a variety of applications, with search, customization and other functions, and has a complete security mechanism.
+Enable has all the features of the Server product, plus the addition of Web Content Management, document libraries and advanced search capabilities based on the functionality of the Server. From the perspective of product structure, there are some configuration files and license information. These files in Enable are collectively referred to as upsell.
+The Extend product is similar to Enable, but adds the collaboration service and the e-form application to the Enable feature.
+The Express product has a DB2 database installed, etc. Other features (purple areas) are no different from servers.
+          </div>
+
+      <div id="divCount">
+        <div class="title">Please rate our services</div>
+        <a class="emo-enjoy" onclick="myfun()" title="非常满意"><i></i><h2>3</h2></a>
+        <a class="emo-happy" onclick="myfun()" title="满意"><i></i><h2>2</h2></a>
+        <a class="emo-nature" onclick="myfun()" title="一般"><i></i><h2>1</h2></a></div>
+    </div>
+        <div style="display:none">
+            <input type="submit" name="Button1" value="Button" id="Button1" />
+            <input type="submit" name="Button2" value="Button" id="Button2" />
+            <input type="submit" name="Button3" value="Button" id="Button3" /> 
+       </div>
+    </form>
+
+
+</body>
+
+
+</html>

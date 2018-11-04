@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>IBM问答系统</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.confirm.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.nicescroll.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.blockUI.js}"></script>
+    <script th:src="@{/js/jquery-scrolltofixed.js}"></script>
+    <link href="css/reset.css" rel="stylesheet" type="text/css"></link>
+    <link href="css/main.css" rel="stylesheet" type="text/css"></link>
+    
+    <script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+    <link href="css/jquery-ui.theme.css" rel="stylesheet" type="text/css"></link>
+    
+    <script>
+        $(document).ready(
+          function () {
+              $("#col-r").niceScroll({
+                  cursorwidth: "10px",
+                  horizrailenabled: false
+              });
+          }
+      );
+    </script>
+    
+    
+</head>
+
+
+<body>
+    
+    <form method="post" action="index.html" id="form2">
+        <div id="header">
+            <!--<div class="logo"></div>-->
+            <div class="main-nav">
+                <ul>
+                    <li class="current"><a href="index" class="current">QA System</a></li>
+                    <li class="nav-qa"><a href="Qalist">Common Question</a></li>
+                    <li class="nav-reply"><a href="about">About</a></li>
+                </ul>
+            </div>
+
+
+            <div style="display: none">
+                <input type="submit" name="ctl00$Top$LogOut" value="Button" id="Top_LogOut">
+            </div>
+
+        </div>
+        <div>
+            <div id="col-l">
+                <div class="col-l-t" style="background-image: url(../images/myback.jpg);background-repeat: no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;">
+                    <div class="content">
+                        <div class="bubble" id="Chat">
+                            <div class="msg clearfix">
+                                <div class="user-assistant"> </div>
+                                <span class="triangle"></span>
+                                <div class="article">
+                                    <p>Welcome!</p><p>Please input your question!</p>
+
+                                </div>
+                            </div>
+                          <!--   <div class="msg fr">
+                                <span class="triangle right"></span><div class="article"><xmp>ss</xmp></div></div>
+                            <div class="msg clearfix">
+                                <div class="user-assistant"></div><span class="triangle right"></span><div class="article">马上为您查找，请稍候.....</div></div>
+                            <div class="msg clearfix"><div class="user-assistant"></div><span class="triangle right"></span><div class="article">十分抱歉，没有找到相关内容！</div></div>
+ -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-l-b">
+                    <div class="faq-input-content">
+                        <textarea name="textfield" class="input" id="faqInput" placeholder="Question" autocomplete="off" onkeydown="checkEnter(event)"></textarea>
+                       
+                        <input type="button" class="myownbtn" value="Clear" onclick="myfunc()">
+                        <input type="button" class="btn" value="Submit" onclick="ChatSendClient()">
+                     
+                        <div class="input-count"><span id="textCount"></span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
+
+
+    </form>
+
+
+    <script type="text/javascript">
+        function checkEnter(e) {
+            var et = e || window.event;
+            var keycode = et.charCode || et.keyCode;
+            if (keycode == 13) {
+                if (window.event)
+                    window.event.returnValue = false;
+                else
+                    e.preventDefault(); //for firefox
+            }
+
+        }
+
+        var flay = 1;
+
+        function timedMsg() {
+            var t = setTimeout("flay=1;", 5000)
+        }
+
+        $(document).ready(function() {
+            //focusblur
+            jQuery.focusblur = function(focusid) {
+                var focusblurid = $(focusid);
+                var defval = focusblurid.val();
+                focusblurid.focus(function() {
+                    var thisval = $(this).val();
+                    if (thisval == defval) {
+                        $(this).val("");
+                    }
+                });
+                focusblurid.blur(function() {
+                    var thisval = $(this).val();
+                    if (thisval == "") {
+                        $(this).val(defval);
+                    }
+                });
+
+            };
+            /*下面是调用方法*/
+
+        });
+
+        var tblRoot; //关键字树
+		
+        
+        //clear
+        function myfunc(){
+        	$.get("/clearDialog",function(res){
+        		console.log(res);
+        	});
+        	$("#Chat").empty();
+        }
+        
+        function ChatSendClient() {
+
+            var s = document.getElementById('faqInput');
+            var str = s.value;
+            if (s.value == "") {
+                return;
+            }
+        /*     if (flay != 1) {
+                AssistantChat("您提问的速度太快，请慢些！");
+                return;
+            }
+            flay = 0;
+            timedMsg();
+
+            //ClientChat(str);
+            s.value = "";
+            AssistantChat("马上为您查找，请稍候....."); */
+	
+            QAfun(str);
+        }
+        
+        function ChatSendClient_Option(str) {
+        	
+        	console.log("ChatSendClient_Option  "+str);
+            ClientChat(str);
+        /*     if (flay != 1) {
+                AssistantChat("您提问的速度太快，请慢些！");
+                return;
+            }
+            flay = 0;
+            timedMsg();
+
+            //ClientChat(str);
+            s.value = "";
+            AssistantChat("马上为您查找，请稍候....."); */
+	
+            QAfun(str);
+        }
+
+
+
+
+
+		function QAfun(str){
+			$.blockUI();
+			console.log("QA"+str);
+			ClientChat(str);
+			 var s = document.getElementById('faqInput');
+			   $.get("/ansandlog?dialogNode="+str,function(res){
+	        		console.log(res);
+	        		$.unblockUI();
+	        		var ans = res.output.generic;
+	        		
+	        		
+	        		console.log(ans);
+	        		for(var i =0;i<ans.length;i++){
+	        			if(ans[i].response_type=="text"){
+	        				if(ans[i].text.endsWith(".png")){
+	        					console.log(ans[i].text);
+	        					AssistantChat_Pic(ans[i].text);
+	        				}
+	        				else{
+	        					AssistantChat(ans[i].text);
+	        				}
+	        				
+	        			}
+	        			else if(ans[i].response_type=="option"){
+	        				console.log("log");
+	        				console.log(ans[i]);
+	        				AssistantChat_list(ans[i].options);
+	        			}
+	        			
+	        		
+	        		}
+	        		s.value="";
+	        	})
+		}
+
+
+		function AssistantChat_Pic(x){
+			var str ="";
+			str ="<img src='"+x+"'></img>"
+           console.log("str");
+           console.log(str);
+           AssistantChat(str);
+		}
+        function ClientChat(str) {
+            var el = document.getElementById('Chat');
+            el.innerHTML += "<div class='msg fr'><span class='triangle right'></span><div class='article'>" + str + "</div></div>";
+            $('.col-l-t').animate({ scrollTop: document.getElementById('Chat').scrollHeight + 'px' });
+            
+        
+
+        }
+        function AssistantChat(str) {
+            var el = document.getElementById('Chat');
+            el.innerHTML += "<div class='msg clearfix'><div class='user-assistant'></div><span class='triangle right'></span><div class='article'>" + str + "</div></div>";
+            $(".slider").pageslide({ direction: "left" });
+            $('.col-l-t').animate({ scrollTop: document.getElementById('Chat').scrollHeight + 'px' });
+        }
+        
+        
+        function AssistantChat_list(content) {
+              /* var el = document.getElementById('Chat');
+             
+             el.innerHTML += "<div class='msg clearfix'><div class='user-assistant'></div><span class='triangle right'></span><div class='article'>"; */
+            
+             var str = ""; 
+             for(var i=0;i<content.length;i++){
+            	 str += "<a onMouseOver=' this.style.color=\"#56123e\"' onMouseOut='this.style.color=\"#117584\"' style='cursor:pointer;'  onclick={QAfun(\""+content[i].label+"\")}>"+content[i].label+"</a><br>"; 
+            }   
+            
+         
+            AssistantChat(str);
+           	/* el.innerHTML+=str + "</div></div>";
+           $(".slider").pageslide({ direction: "left" });    */
+            //console.log(content[0].label);
+        }
+        
+
+        document.onkeydown = function(event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode == 13) { // enter 键
+                e.preventDefault();
+                ChatSendClient();
+            }
+        };
+    </script>
+    <script th:src="@{/js/jquery.input.count.js}"></script><!--限制输入字数-->
+    <script th:src="@{/js/SearchKey.js}"></script>
+
+
+
+<script th:src="@{/js/jquery.pageslide.js}"></script>
+
+<div id="pageslide" style="display: none;"></div>
+<script>
+    $(".slider").pageslide({ direction: "left", modal: "true" });
+</script>
+<script type="text/javascript" th:src="@{/js/jquery.number.js}"></script>
+
+
+<div id="ascrail2000" class="nicescroll-rails nicescroll-rails-vr" style="width: 12px; z-index: auto; cursor: default; position: absolute; top: 95px; left: 1428px; height: 326px; opacity: 0;">
+    <div class="nicescroll-cursors" style="position: relative; top: 0px; float: right; width: 10px; height: 132px; border: 1px solid rgb(255, 255, 255); border-radius: 5px; background-color: rgb(66, 66, 66); background-clip: padding-box;"></div>
+</div>
+
+
+
+</body>
+
+
+
+</html>

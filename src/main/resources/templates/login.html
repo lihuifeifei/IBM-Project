@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>iTalk</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
+    <script type="text/javascript" th:src="@{/js/vue.min.js}"></script>
+    <script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>
+</head>
+
+<style>
+</style>
+
+<body>
+    <div id="app">
+        <Row type="flex" justify="center" align="middle" class="login">
+            <i-col :xs="{span:22}" style="width: 368px;">
+                <Row class="header">
+                    <img src="../images/logo2.png" width="220px" />
+                    <div class="description">Welcome To Login In iTalk</div>
+                </Row>
+
+                <Alert type="error" show-icon v-if="errorMsg">{{errorMsg}}</Alert>
+
+                <Row class="login-form">
+                    <Tabs value="1">
+                        <Tab-Pane label="user" name="1" icon="md-person">
+                            <i-form ref="usernameLoginForm" :model="form" :rules="rules" class="form">
+                                <Form-Item prop="username">
+                                    <i-input v-model="form.username" prefix="ios-contact" size="large" clearable placeholder="username" autocomplete="off" />
+                                </Form-Item>
+                                <Form-Item prop="password">
+                                    <i-input type="password" v-model="form.password" prefix="ios-lock" size="large" clearable placeholder="password" autocomplete="off"
+                                    />
+                                </Form-Item>
+                            </i-form>
+
+                            <Row type="flex" justify="space-between" class="code-row-bg">
+                                <Checkbox v-model="saveLogin" size="large">Auto Sign In</Checkbox>
+                                <Dropdown trigger="click" @on-click="handleDropDown">
+                                    <a class="forget-pass">
+                                        Forget Password
+                                    </a>
+                                    <Dropdown-Menu slot="list">
+                                        <Dropdown-Item name="showAccount">Experience</Dropdown-Item>
+                                    </Dropdown-Menu>
+                                </Dropdown>
+                            </Row>
+                            <Row>
+                                <i-button class="login-btn" type="primary" size="large" :loading="loading" @click="submitLogin" long>
+                                    <span v-if="!loading">Sign in</span>
+                                    <span v-else>Please Wait...</span>
+                                </i-button>
+                            </Row>
+                        </Tab-Pane>
+                </Row>
+
+                <Row class="foot">
+                    <Row type="flex" justify="space-around" class="code-row-bg help">
+                        <a class="item" href="" target="_blank">Help</a>
+                        <a class="item" href="" target="_blank">Privacy</a>
+                        <a class="item" href="" target="_blank">About</a>
+                    </Row>
+                    <Row type="flex" justify="center" class="code-row-bg copyright">
+                        Copyright © 2018 - Presented By <a href="" target="_blank" style="margin:0 5px;">SWJTU</a>
+                    </Row>
+                </Row>
+            </i-col>
+        </Row>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            errorMsg: "",
+            saveLogin: true,
+            loading: false,
+            errorCode: "",
+            form: {
+                username: "ibm",
+                password: "123456"
+            },
+            rules: {
+                username: [
+                    {
+                        required: true,
+                        message: "username cannot be null",
+                        trigger: "blur"
+                    }
+                ],
+                password: [
+                    {
+                        required: true,
+                        message: "password cannot be null",
+                        trigger: "blur"
+                    }
+                ]
+            }
+        },
+        methods: {
+            showErrorMsg(msg) {
+                this.error = true;
+                this.errorMsg = msg;
+            },
+            submitLogin() {
+                this.$refs.usernameLoginForm.validate(valid => {
+                    if (valid) {
+                        this.loading = true;
+                        if (this.form.username == "ibm" && this.form.password == "123456") {
+                            //跳转
+                            window.location.href = "/index"
+                        } else {
+                            this.errorMsg = "error username or password"
+                            this.loading = false;
+                        }
+                    }
+                });
+            },
+            handleDropDown(v) {
+                if (v == "showAccount") {
+                    this.showAccount();
+                }
+            },
+            showAccount() {
+                this.$Notice.info({
+                    title: "Experence",
+                    desc:
+                        "ibm password：123456",
+                    duration: 10
+                });
+            }
+        }
+    })
+</script>
+
+</html>
