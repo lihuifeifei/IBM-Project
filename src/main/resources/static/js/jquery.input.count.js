@@ -16,7 +16,7 @@ $(function () {
     //提示文字
     $tex.focus(function () {
         if ($tex.val() == "") {
-            $(".input-count").html("您还可以输入<span>100</span>个字");
+            $(".input-count").html("You can input<span>100</span>words");
         }
     })
     $tex.blur(function () {
@@ -45,7 +45,7 @@ $(function () {
             $but.addClass("btn");
             $but.attr("disabled", false);
             texts = Math.ceil((maxNum - (str * 2 + abcnum)) / 2);
-            $(".input-count").html("您还可以输入<span>" + texts + "</span>个字").children().css({ "color": "#45a6a7" });
+            $(".input-count").html("You can input<span>" + texts + "</span>words").children().css({ "color": "#45a6a7" });
         } else if (str * 2 + abcnum > maxNum) {
             $but.removeClass();
             $but.addClass("btn2");
